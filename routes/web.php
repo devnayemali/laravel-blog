@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\BackEndController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/', [FrontendController::class, 'index']);
-Route::get('/single-post', [FrontendController::class, 'single']);
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
+
+
+
+Route::get('/', [FrontendController::class, 'index'])->name('front.index');
+
+Route::prefix('dashboard')->group(function(){
+    Route::get('/', [BackEndController::class, 'index'])->name('back.index');
+});
+
+
+
+
+require __DIR__.'/auth.php';
