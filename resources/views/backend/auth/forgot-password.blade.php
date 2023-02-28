@@ -1,6 +1,6 @@
 @extends('backend.auth.layouts.master')
 
-@section('page_title', 'Login')
+@section('page_title', 'Forgot Password')
 
 @section('content')
     <div class="container">
@@ -15,10 +15,10 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Reset Your Password</h1>
                                     </div>
 
-                                    {!! Form::open(['route' => 'login', 'method' => 'post', 'class' => 'user']) !!}
+                                    {!! Form::open(['route' => 'password.email', 'method' => 'post', 'class' => 'user']) !!}
 
                                     <div class="form-group">
                                         {!! Form::label('email', 'E-mail Address') !!}
@@ -28,23 +28,13 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-group">
-                                        {!! Form::label('password', 'Password') !!}
-                                        {!! Form::password('password', ['class' => $errors->has('password') ? 'is-invalid form-control form-control-user mb-1' : 'form-control form-control-user mb-1'], null) !!}
-                                        @error('password')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-                                    {!! Form::button('Login', ['type' => 'submit', 'class' => 'btn btn-primary btn-user btn-block']) !!}
+                                    {!! Form::button('Send', ['type' => 'submit', 'class' => 'btn btn-primary btn-user btn-block']) !!}
 
                                     {!! Form::close() !!}
 
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
+                                        <a class="small" href="{{ route('login') }}">Already Have A Account</a> <br>
                                         <a class="small" href="{{ route('register') }}">Create an Account!</a>
                                     </div>
                                 </div>

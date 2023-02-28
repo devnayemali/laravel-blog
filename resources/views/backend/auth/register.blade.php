@@ -49,7 +49,7 @@
                                         {!! Form::password('password_confirmation', ['class' => 'form-control form-control-user mb-3']) !!}
                                     </div>
 
-                                    {!! Form::button('Login', ['type' => 'submit', 'class' => 'btn btn-primary btn-user btn-block']) !!}
+                                    {!! Form::button('Register', ['type' => 'submit', 'class' => 'btn btn-primary btn-user btn-block']) !!}
 
                                     {!! Form::close() !!}
 
