@@ -31,7 +31,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-
 Route::get('/', [FrontendController::class, 'index'])->name('front.index');
 
 Route::prefix('dashboard')->group(function(){

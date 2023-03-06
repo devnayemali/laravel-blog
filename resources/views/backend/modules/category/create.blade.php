@@ -11,27 +11,20 @@
                         <h6 class="m-0 font-weight-bold text-primary">Create Category</h6>
                     </div>
                     <div class="card-body">
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         {!! Form::open(['route' => 'category.store', 'method' => 'post', 'class' => 'user']) !!}
 
-                        <div class="form-group">
-                            {!! Form::label('name', 'Category Name') !!}
-                            {!! Form::text('name', null, ['id' => 'name', 'class' => 'form-control form-control-user mb-1']) !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::label('slug', 'Category Slug') !!}
-                            {!! Form::text('slug', null, ['id' => 'slug', 'class' => 'form-control form-control-user mb-1']) !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::label('order_by', 'Category Serial') !!}
-                            {!! Form::number('order_by', null, ['class' => 'form-control form-control-user mb-1']) !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::label('status', 'Category Status') !!}
-                            {!! Form::select('status', ['1' => 'Active', '0' => 'Inactive'], 1) !!}
-                        </div>
+                        @include('backend.modules.category.form')
 
                         {!! Form::button('Create Category', ['type' => 'submit', 'class' => 'btn btn-primary btn-user']) !!}
 
