@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\BackEndController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontendController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,9 +36,8 @@ Route::get('/', [FrontendController::class, 'index'])->name('front.index');
 
 Route::prefix('dashboard')->group(function(){
     Route::get('/', [BackEndController::class, 'index'])->name('back.index');
+    Route::resource('category', CategoryController::class);
 });
-
-
 
 
 require __DIR__.'/auth.php';

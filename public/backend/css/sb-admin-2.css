@@ -10883,14 +10883,14 @@ form.user .custom-checkbox.small label {
 }
 
 form.user .form-control-user {
-  font-size: 0.8rem;
-  border-radius: 10rem;
+  font-size: 16px;
+  border-radius: 10px;
   padding: 1.5rem 1rem;
 }
 
 form.user .btn-user {
-  font-size: 0.8rem;
-  border-radius: 10rem;
+    font-size: 16px;
+    border-radius: 10px;
   padding: 0.75rem 1rem;
 }
 
