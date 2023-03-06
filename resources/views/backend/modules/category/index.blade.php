@@ -9,23 +9,16 @@
                 <div class="card shadow mb-4 pb-2">
                     <div class="card-header py-3">
                         <div class="row align-items-center">
-                            <div class="col-xl-4">
+                            <div class="col-xl-6">
                                 <h6 class="m-0 font-weight-bold text-primary">Create List</h6>
                             </div>
-                            <div class="col-xl-8">
-                                <div class="text-center d-inline-block">
-                                    @if (session('msg'))
-                                        <div class="text-capitalize mb-0 alert alert-{{ session('cls') }}">
-                                            {!! session('msg') !!}
-                                        </div>
-                                    @endif
-                                </div>
+                            <div class="col-xl-6 text-right">
+                                <a class="btn btn-info px-3" href="{{ route('category.create') }}">Add Category</a>
                             </div>
                         </div>
-
                     </div>
                     <div class="card-body">
-                        @if(!$categories->isEmpty())
+                        @if (!$categories->isEmpty())
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -106,6 +99,28 @@
         </div>
     </div>
 
+    @if (session('msg'))
+        @push('js')
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: '{{ session('cls') }}',
+                    title: '{{ session('msg') }}'
+                })
+            </script>
+        @endpush
+    @endif
 
     @push('js')
         <script>

@@ -90,8 +90,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        session()->flash('cls', 'danger');
-        session()->flash('msg', 'Category Delete Successfully.');
+        session()->flash('cls', 'error');
+        session()->flash('msg', 'Category Delete Successfully');
         return redirect()->route('category.index');
     }
 }
