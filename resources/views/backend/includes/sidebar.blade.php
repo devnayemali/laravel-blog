@@ -41,6 +41,20 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTag"
+            aria-expanded="true" aria-controls="collapseTag">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Tag</span>
+        </a>
+        <div id="collapseTag" class="collapse" aria-labelledby="headingTag" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('tag.index') }}">Tag List</a>
+                <a class="collapse-item" href="{{ route('tag.create') }}">Add New Tag</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
