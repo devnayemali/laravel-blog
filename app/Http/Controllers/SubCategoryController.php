@@ -95,4 +95,12 @@ class SubCategoryController extends Controller
         session()->flash('msg', 'Sub Category Delete Successfully');
         return redirect()->route('sub-category.index');
     }
+
+    /**
+     * Get Sub Category By Category Id
+    */
+    public function getSubCategorByCategoryId(int $id){
+        $sub_categories = SubCategory::select('id','name')->where('category_id', $id)->get();
+        return response()->json($sub_categories);
+    }
 }

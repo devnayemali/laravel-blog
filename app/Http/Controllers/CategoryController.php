@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Str;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -81,7 +81,6 @@ class CategoryController extends Controller
         session()->flash('cls', 'success');
         session()->flash('msg', 'Category Updated Successfully.');
         return redirect()->route('category.index');
-
     }
 
     /**
