@@ -24,8 +24,8 @@
                                     <thead>
                                         <tr>
                                             <th>Serial No</th>
-                                            <th>Name</th>
-                                            <th>Position</th>
+                                            <th>Category</th>
+                                            <th>Slug</th>
                                             <th>Order By</th>
                                             <th>Status</th>
                                             <th>Created At</th>
@@ -36,8 +36,8 @@
                                     <tfoot>
                                         <tr>
                                             <th>Serial No</th>
-                                            <th>Name</th>
-                                            <th>Position</th>
+                                            <th>Category</th>
+                                            <th>Slug</th>
                                             <th>Order By</th>
                                             <th>Status</th>
                                             <th>Created At</th>

@@ -28,15 +28,29 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#category"
+            aria-expanded="true" aria-controls="category">
             <i class="fas fa-fw fa-cog"></i>
             <span>Category</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="category" class="collapse" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('category.index') }}">Category List</a>
                 <a class="collapse-item" href="{{ route('category.create') }}">Add New Category</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sub_category"
+            aria-expanded="true" aria-controls="sub_category">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Sub Category</span>
+        </a>
+        <div id="sub_category" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('sub-category.index') }}">Sub Category List</a>
+                <a class="collapse-item" href="{{ route('sub-category.create') }}">Add New Sub Category</a>
             </div>
         </div>
     </li>
@@ -47,7 +61,7 @@
             <i class="fas fa-fw fa-cog"></i>
             <span>Tag</span>
         </a>
-        <div id="collapseTag" class="collapse" aria-labelledby="headingTag" data-parent="#accordionSidebar">
+        <div id="collapseTag" class="collapse" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('tag.index') }}">Tag List</a>
                 <a class="collapse-item" href="{{ route('tag.create') }}">Add New Tag</a>
