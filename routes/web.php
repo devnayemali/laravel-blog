@@ -3,6 +3,7 @@
 use App\Http\Controllers\BackEndController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('front.index');
+Route::get('/phpinfo', function() {
+    return phpinfo();
+});
 
 Route::prefix('dashboard')->group(function(){
     Route::get('', [BackEndController::class, 'index'])->name('back.index');

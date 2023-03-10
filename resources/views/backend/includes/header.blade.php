@@ -14,3 +14,4 @@
 
 <!-- Custom styles for this template-->
 <link href="{{ url('backend/css/sb-admin-2.css') }}" rel="stylesheet">
+<link href="{{ url('backend/css/custom.css') }}" rel="stylesheet">
