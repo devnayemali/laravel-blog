@@ -1,14 +1,14 @@
 @extends('backend.layouts.master')
 
-@section('page_title', 'Edit Category')
+@section('page_title', 'Edit Post')
 
 @section('content')
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-xl-5">
+            <div class="col-xl-8">
                 <div class="card shadow mb-4 pb-2">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Edit Category</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Edit Post</h6>
                     </div>
                     <div class="card-body">
 
@@ -22,14 +22,14 @@
                             </div>
                         @endif
 
-                        {!! Form::model( $category, ['route' => ['category.update', $category->id], 'method' => 'put', 'class' => 'user']) !!}
+                        {!! Form::model( $post, ['route' => ['post.update', $post->id], 'method' => 'put', 'class' => 'user']) !!}
 
-                        @include('backend.modules.category.form')
+                        @include('backend.modules.post.form')
 
                         {!! Form::button('Update Category', ['type' => 'submit', 'class' => 'btn btn-primary btn-user']) !!}
 
                         {!! Form::close() !!}
-                        <a class="btn btn-primary mt-4 px-3" href="{{ route('category.index') }}">Back</a>
+                        <a class="btn btn-primary mt-4 px-3" href="{{ route('post.index') }}">Back</a>
                     </div>
                 </div>
             </div>

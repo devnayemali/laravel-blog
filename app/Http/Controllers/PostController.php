@@ -16,7 +16,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('backend.modules.post.index');
+        $posts = Post::with('category', 'sub_category', 'user', 'tag')->latest()->paginate(20);
+        return view('backend.modules.post.index', compact('posts'));
     }
 
     /**
@@ -25,7 +26,7 @@ class PostController extends Controller
     public function create()
     {
         $tags = Tag::where('status', 1)->select('name', 'id')->get();
-        $categories = Category::where('status', 1)->pluck('name','id');
+        $categories = Category::where('status', 1)->pluck('name', 'id');
         return view('backend.modules.post.create', compact('categories', 'tags'));
     }
 
@@ -41,8 +42,7 @@ class PostController extends Controller
         $post_data['user_id'] = 1;
         $post_data['is_approved'] = 1;
 
-
-        if ($request->hasFile('photo')){
+        if ($request->hasFile('photo')) {
 
             $file = $request->file('photo');
             $name = Str::slug($request->input('slug'));
@@ -60,11 +60,13 @@ class PostController extends Controller
             $post_data['photo'] = PhotoUploadController::imageUpload($name, $height, $width, $path, $file);
             // thumbnail image
             PhotoUploadController::imageUpload($name, $thumb_height, $thumb_width, $thumb_path, $file);
-
         }
 
         $post = Post::create($post_data);
         $post->tag()->attach($request->input('tag_ids'));
+        session()->flash('cls', 'success');
+        session()->flash('msg', 'Post Created Successfully.');
+        return redirect()->route('post.index');
     }
 
     /**
@@ -72,7 +74,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        $post->load('category', 'sub_category', 'user', 'tag');
+        return view('backend.modules.post.show', compact('post'));
     }
 
     /**
@@ -80,7 +83,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $tags = Tag::where('status', 1)->select('name', 'id')->get();
+        $categories = Category::where('status', 1)->pluck('name', 'id');
+        return view('backend.modules.post.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -98,6 +103,4 @@ class PostController extends Controller
     {
         //
     }
-
-
 }

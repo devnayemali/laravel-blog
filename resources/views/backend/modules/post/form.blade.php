@@ -5,7 +5,11 @@
 
 <div class="form-group">
     {!! Form::label('slug', 'Post Slug') !!}
-    {!! Form::text('slug', null, ['id' => 'slug', 'maxlength'=>'10', 'class' => 'form-control form-control-user mb-1']) !!}
+    {!! Form::text('slug', null, [
+        'id' => 'slug',
+        'maxlength' => '10',
+        'class' => 'form-control form-control-user mb-1',
+    ]) !!}
 </div>
 
 <div class="row">
@@ -47,6 +51,10 @@
 <div class="form-group">
     {!! Form::label('photo', 'Photo') !!}
     {!! Form::file('photo', ['class' => 'form-control', 'id' => 'photo']) !!}
+
+    {{-- @if (file_exists(public_path($post->photo)))
+        <img class="mt-2" src="{{ url('/image/post/original/', $post->photo) }}" alt="">
+    @endif --}}
 </div>
 
 
@@ -62,37 +70,42 @@
     <script src="{{ url('backend/js/axios.min.js') }}"></script>
     <script src="{{ url('backend/js/ckeditor.js') }}"></script>
     <script>
-
-
-
+        // Auto Write Post Slug
         $('#title').on('input', function() {
             var title = $(this).val();
             var slug = title.replaceAll(' ', '-');
             $('#slug').val(slug.toLowerCase());
         });
 
-
         let domainName = window.location.origin;
-        let sub_category_element = $('#sub_category_id');
-        $("#sub_category_id").append(`<option value ="0"> No Data </option>`);
+        let sub_categoy_element = $("#sub_category_id");
+        sub_categoy_element.append(`<option value ="0"> Select Sub Category </option>`);
         $('#category_id').on('change', function() {
-            let category_id = $(this).val();
+            // get categoy id
+            let category_id = $('#category_id').val();
+
+            // get sub categoy by api
             let sub_categories;
-            sub_category_element.empty();
+            sub_categoy_element.empty();
             axios.get(domainName + '/dashboard/get-subcategory/' + category_id).then(res => {
                 sub_categories = res.data;
-                if (sub_categories.length != 0) {
-                    sub_categories.map((sub_category, index) => {
-                        $("#sub_category_id").append(
-                            `<option value ="${ sub_category.id }"> ${ sub_category.name } </option>`
-                        );
+                if (sub_categories.length > 0) {
+                    // sub_categories.map((sub_categoy, index) => (
+                    //     $('#sub_category_id').append(
+                    //         `<option value ="${ sub_categoy.id }"> ${ sub_categoy.name } </option>`)
+                    // ));
+
+                    sub_categories.forEach( (sub_categoy, index) => {
+                        console.log(sub_categoy, index);
+                        sub_categoy_element.append(`<option value ="${ sub_categoy.id }"> ${ sub_categoy.name } </option>`);
                     });
+
+
                 } else {
-                    sub_category_element.append(`<option value ="0"> No Data </option>`);
+                    $("#sub_category_id").append(`<option value ="0"> No Data </option>`);
                 }
             });
         });
-
 
         // ckeditor js
         ClassicEditor
