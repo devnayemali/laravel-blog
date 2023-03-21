@@ -25,10 +25,8 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('category_id', 'Select Category') !!}
-
+            {!! Form::label('category_id', 'Select Sub Category') !!}
             <select class="form-control" name="sub_category_id" id="sub_category_id"></select>
-
         </div>
     </div>
 </div>
@@ -44,7 +42,7 @@
 <div class="form-group">
     {!! Form::label('tag_id', 'Tags:', ['class' => 'mr-3']) !!}
     @foreach ($tags as $tag)
-        <span class="mr-4"> {!! Form::checkbox('tag_ids[]', $tag->id, false) !!} {{ $tag->name }}</span>
+        <span class="mr-4"> {!! Form::checkbox('tag_ids[]', $tag->id, ( Route::currentRouteName() == 'post.edit' ) ? in_array($tag->id, $selected_tags) : false ) !!} {{ $tag->name }}</span>
     @endforeach
 </div>
 
@@ -52,9 +50,9 @@
     {!! Form::label('photo', 'Photo') !!}
     {!! Form::file('photo', ['class' => 'form-control', 'id' => 'photo']) !!}
 
-    {{-- @if (file_exists(public_path($post->photo)))
-        <img class="mt-2" src="{{ url('/image/post/original/', $post->photo) }}" alt="">
-    @endif --}}
+    @if (Route::currentRouteName() == 'post.edit')
+        <img class="mt-2" src="{{ url('/image/post/original/', $post->photo) }}">
+    @endif
 </div>
 
 
@@ -77,16 +75,11 @@
             $('#slug').val(slug.toLowerCase());
         });
 
-        let domainName = window.location.origin;
-        let sub_categoy_element = $("#sub_category_id");
-        sub_categoy_element.append(`<option value ="0"> Select Sub Category </option>`);
-        $('#category_id').on('change', function() {
-            // get categoy id
-            let category_id = $('#category_id').val();
-
+        const get_sub_categories = (category_id) => {
             // get sub categoy by api
             let sub_categories;
             sub_categoy_element.empty();
+            let rounte_name = '{{ Route::currentRouteName() }}';
             axios.get(domainName + '/dashboard/get-subcategory/' + category_id).then(res => {
                 sub_categories = res.data;
                 if (sub_categories.length > 0) {
@@ -95,16 +88,33 @@
                     //         `<option value ="${ sub_categoy.id }"> ${ sub_categoy.name } </option>`)
                     // ));
 
-                    sub_categories.forEach( (sub_categoy, index) => {
-                        console.log(sub_categoy, index);
-                        sub_categoy_element.append(`<option value ="${ sub_categoy.id }"> ${ sub_categoy.name } </option>`);
+                    sub_categories.forEach((sub_category, index) => {
+                        let selected = '';
+                        if (rounte_name == 'post.edit') {
+                            let sub_category_id = '{{ $post->sub_category_id ?? null}}';
+                            if ( sub_category_id == sub_category.id) {
+                                selected = 'selected';
+                            }
+                        }
+                        sub_categoy_element.append(
+                            `<option ${selected} value ="${ sub_category.id }"> ${ sub_category.name } </option>`
+                        );
                     });
-
 
                 } else {
                     $("#sub_category_id").append(`<option value ="0"> No Data </option>`);
                 }
             });
+        }
+
+
+        let domainName = window.location.origin;
+        let sub_categoy_element = $("#sub_category_id");
+        sub_categoy_element.append(`<option value ="0"> Select Sub Category </option>`);
+        $('#category_id').on('change', function() {
+            let category_id = $('#category_id').val();
+            // get categoy id
+            get_sub_categories(category_id);
         });
 
         // ckeditor js
@@ -114,4 +124,11 @@
                 console.error(error);
             });
     </script>
+
+    @if (Route::currentRouteName() == 'post.edit')
+        <script>
+            get_sub_categories({{ $post->category_id }});
+        </script>
+    @endif
+
 @endpush

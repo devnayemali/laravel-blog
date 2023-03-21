@@ -22,7 +22,12 @@
                             </div>
                         @endif
 
-                        {!! Form::model( $post, ['route' => ['post.update', $post->id], 'method' => 'put', 'class' => 'user']) !!}
+                        {!! Form::model($post, [
+                            'route' => ['post.update', $post->id],
+                            'method' => 'put',
+                            'class' => 'user',
+                            'files' => true,
+                        ]) !!}
 
                         @include('backend.modules.post.form')
 
