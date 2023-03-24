@@ -12,3 +12,4 @@
 <link rel="stylesheet" href="{{ url('frontend/assets/css/fontawesome.css') }}">
 <link rel="stylesheet" href="{{ url('frontend/assets/css/templatemo-stand-blog.css') }}">
 <link rel="stylesheet" href="{{ url('frontend/assets/css/owl.css') }}">
+<link rel="stylesheet" href="{{ url('frontend/assets/css/custom.css') }}">

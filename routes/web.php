@@ -35,9 +35,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [FrontendController::class, 'index'])->name('front.index');
-Route::get('/phpinfo', function() {
-    return phpinfo();
-});
+Route::get('/category/{slug}', [FrontendController::class, 'index'])->name('front.category');
+Route::get('/category/{cat_slug}/{sub_cat_slug}', [FrontendController::class, 'index'])->name('front.sub_category');
+Route::get('/tag/{slug}', [FrontendController::class, 'index'])->name('front.tag');
+Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('front.single');
+
 
 Route::prefix('dashboard')->group(function(){
     Route::get('', [BackEndController::class, 'index'])->name('back.index');
