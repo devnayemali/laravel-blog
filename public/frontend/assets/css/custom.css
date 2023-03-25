@@ -4,3 +4,13 @@
 .sidebar  .categories ul li ul li{
     margin-bottom: 0;
 }
+
+.blog-posts .blog-thumb img {
+    width: 100%;
+    aspect-ratio: 38/28;
+    overflow: hidden;
+}
+
+.owl-carousel .owl-item img {
+    max-height: 500px;
+}

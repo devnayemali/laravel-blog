@@ -28,7 +28,7 @@ class PhotoUploadController extends Controller
         return $image_name;
     }
 
-    // image delete 
+    // image delete
     public static function imageUnlink($path, $name): void
     {
         $image_path = public_path($path) . $name;

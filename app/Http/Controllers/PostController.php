@@ -59,9 +59,9 @@ class PostController extends Controller
             // $post_data['photo'] = PhotoUploadController::imageUpload($name, $path, $file);
 
             // crop image upload
-            $post_data['photo'] = PhotoUploadController::imageUpload($name, $height, $width, $path, $file);
+            $post_data['photo'] = PhotoUploadController::imageUpload($name, $width, $height, $path, $file);
             // thumbnail image
-            PhotoUploadController::imageUpload($name, $thumb_height, $thumb_width, $thumb_path, $file);
+            PhotoUploadController::imageUpload($name, $thumb_width, $thumb_height, $thumb_path, $file);
         }
 
         $post = Post::create($post_data);
@@ -135,6 +135,14 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $path = 'image/post/original/';
+        $thumb_path = 'image/post/thumbnail/';
+
+        PhotoUploadController::imageUnlink($path, $post->photo);
+        PhotoUploadController::imageUnlink($thumb_path, $post->photo);
+        $post->delete();
+        session()->flash('cls', 'error');
+        session()->flash('msg', 'Post Delete Successfully');
+        return redirect()->route('post.index');
     }
 }
