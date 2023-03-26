@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BackEndController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SubCategoryController;
@@ -50,6 +51,7 @@ Route::prefix('dashboard')->group(function(){
     Route::get('get-subcategory/{id}', [SubCategoryController::class, 'getSubCategorByCategoryId']);
     Route::resource('sub-category', SubCategoryController::class);
     Route::resource('tag', TagController::class);
+    Route::resource('comment', CommentController::class);
 });
 
 

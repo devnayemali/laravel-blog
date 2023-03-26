@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\SubCategory;
+use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -17,11 +19,16 @@ class FrontendController extends Controller
         return view('frontend.modules.index', compact('posts', 'slider_posts'));
     }
 
-    public function category($slug)
+    public function category(string $slug)
     {
         $category = Category::where('slug', $slug)->first();
         if ($category) {
-            $all_posts = Post::with('category', 'user', 'tag')->where('is_approved', 1)->where('status', 1)->where('category_id', $category->id)->latest()->paginate(10);
+            $all_posts = Post::with('category', 'user', 'tag')
+                ->where('is_approved', 1)
+                ->where('status', 1)
+                ->where('category_id', $category->id)
+                ->latest()
+                ->paginate(10);
         }
         $title = 'Post By Category';
         $sub_title = $category->name;
@@ -29,10 +36,16 @@ class FrontendController extends Controller
     }
 
 
-    public function sub_category($slug, $sub_slug){
+    public function sub_category(string $slug, string $sub_slug)
+    {
         $sub_category = SubCategory::where('slug', $sub_slug)->first();
         if ($sub_category) {
-            $all_posts = Post::with('category', 'user', 'tag')->where('is_approved', 1)->where('status', 1)->where('sub_category_id', $sub_category->id)->latest()->paginate(10);
+            $all_posts = Post::with('category', 'user', 'tag')
+                ->where('is_approved', 1)
+                ->where('status', 1)
+                ->where('sub_category_id', $sub_category->id)
+                ->latest()
+                ->paginate(10);
         }
         $title = 'Post By Sub Category';
         $sub_title = $sub_category->name;
@@ -40,25 +53,30 @@ class FrontendController extends Controller
     }
 
 
-    public function tag($slug)
+    public function tag(string $slug)
     {
-        $category = Category::where('slug', $slug)->first();
-        if ($category) {
-            $all_posts = Post::with('category', 'user', 'tag')->where('is_approved', 1)->where('status', 1)->where('category_id', $category->id)->latest()->paginate(10);
+        $tag = Tag::where('slug', $slug)->select('id', 'name')->first();
+        $post_ids = DB::table('post_tag')->select('post_id')->where('tag_id', $tag->id)->distinct()->pluck('post_id');
+        if ($tag) {
+            $all_posts = Post::with('category', 'user', 'tag')
+                ->where('is_approved', 1)
+                ->where('status', 1)
+                ->whereIn('id', $post_ids)
+                ->latest()
+                ->paginate(10);
         }
-        $title = 'Post By Category';
-        $sub_title = $category->name;
+        $title = 'Post By Tag';
+        $sub_title = $tag->name;
         return view('frontend.modules.all_post', compact('all_posts', 'title', 'sub_title'));
-    }
-
-    public function single()
-    {
-        return view('frontend.modules.single');
     }
 
     public function all_post()
     {
-        $all_posts = Post::with('category', 'user', 'tag')->where('is_approved', 1)->where('status', 1)->latest()->paginate(10);
+        $all_posts = Post::with('category', 'user', 'tag')
+            ->where('is_approved', 1)
+            ->where('status', 1)
+            ->latest()
+            ->paginate(10);
 
         $title = 'All Post';
         $sub_title = 'View All Post';
@@ -78,5 +96,18 @@ class FrontendController extends Controller
         $sub_title = $data;
 
         return view('frontend.modules.all_post', compact('all_posts', 'title', 'sub_title'));
+    }
+
+
+    public function single(string $slug)
+    {
+        $title = 'POST DETAILS';
+        $sub_title = $slug;
+        $post = Post::with('category', 'user', 'tag', 'comment', 'comment.user')
+            ->where('is_approved', 1)
+            ->where('status', 1)
+            ->where('slug', $slug)
+            ->firstOrFail();
+        return view('frontend.modules.single', compact('post', 'title', 'sub_title'));
     }
 }

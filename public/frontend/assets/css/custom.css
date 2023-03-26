@@ -14,3 +14,9 @@
 .owl-carousel .owl-item img {
     max-height: 500px;
 }
+
+
+.sidebar-item.comments ul li {
+    display: grid;
+    grid-template-columns: 140px auto;
+}
