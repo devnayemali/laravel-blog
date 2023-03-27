@@ -103,11 +103,18 @@ class FrontendController extends Controller
     {
         $title = 'POST DETAILS';
         $sub_title = $slug;
-        $post = Post::with('category', 'user', 'tag', 'comment', 'comment.user')
+        $post = Post::with('category', 'user', 'tag', 'comment', 'comment.user', 'comment.reply')
             ->where('is_approved', 1)
             ->where('status', 1)
             ->where('slug', $slug)
             ->firstOrFail();
         return view('frontend.modules.single', compact('post', 'title', 'sub_title'));
+    }
+
+
+    final public function contact_us(){
+        $title = 'LET’S STAY IN TOUCH!';
+        $sub_title = 'CONTACT US';
+        return view('frontend.modules.contact', compact('title', 'sub_title'));
     }
 }

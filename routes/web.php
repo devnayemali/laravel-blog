@@ -42,6 +42,7 @@ Route::get('/category/{slug}', [FrontendController::class, 'category'])->name('f
 Route::get('/category/{cat_slug}/{sub_cat_slug}', [FrontendController::class, 'sub_category'])->name('front.sub_category');
 Route::get('/tag/{slug}', [FrontendController::class, 'tag'])->name('front.tag');
 Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('front.single');
+Route::get('/contact-us', [FrontendController::class, 'contact_us'])->name('front.contact');
 
 
 Route::prefix('dashboard')->group(function(){

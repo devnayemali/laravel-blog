@@ -20,3 +20,27 @@
     display: grid;
     grid-template-columns: 140px auto;
 }
+
+
+.comment-form textarea {
+    width: 100%;
+    border: 1px solid #eee;
+    font-size: 13px;
+    font-weight: 500;
+    color: #7a7a7a;
+    outline: none;
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    height: 180px;
+    max-height: 220px;
+    max-width: 100%;
+    min-width: 160px;
+}
+
+.comment-form-wrap .comment-form{
+    display: none;
+}
+
+.comment-form-wrap.active .comment-form{
+    display: block;
+}

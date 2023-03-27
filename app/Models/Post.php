@@ -31,6 +31,6 @@ class Post extends Model
     // Foren Key অন্য table এ থাকলে ==== hasMany/hasOne
 
     public function comment(){
-        return $this->hasMany(comment::class);
+        return $this->hasMany(Comment::class)->whereNull('comment_id');
     }
 }
