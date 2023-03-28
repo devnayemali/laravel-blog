@@ -3,6 +3,7 @@
 use App\Http\Controllers\BackEndController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\SubCategoryController;
@@ -43,6 +44,7 @@ Route::get('/category/{cat_slug}/{sub_cat_slug}', [FrontendController::class, 's
 Route::get('/tag/{slug}', [FrontendController::class, 'tag'])->name('front.tag');
 Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('front.single');
 Route::get('/contact-us', [FrontendController::class, 'contact_us'])->name('front.contact');
+Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
 
 Route::prefix('dashboard')->group(function(){
