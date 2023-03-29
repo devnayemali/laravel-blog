@@ -3,14 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\District;
+use App\Models\Division;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+
+    public function index(): View
+    {
+        $divisions = Division::pluck('name', 'id');
+        return view('backend.modules.profile.profile', compact('divisions'));
+    }
+
     /**
      * Display the user's profile form.
      */
@@ -56,5 +67,11 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function getDistricts(int $division_id): JsonResponse
+    {
+        $districts = District::select('id', 'name')->where('division_id', $division_id)->get();
+        return response()->json($districts);
     }
 }

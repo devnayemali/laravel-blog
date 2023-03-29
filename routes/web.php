@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -45,7 +46,7 @@ Route::get('/tag/{slug}', [FrontendController::class, 'tag'])->name('front.tag')
 Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('front.single');
 Route::get('/contact-us', [FrontendController::class, 'contact_us'])->name('front.contact');
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
-
+Route::get('/get-districts/{division_id}', [ProfileController::class, 'getDistricts']);
 
 Route::prefix('dashboard')->group(function(){
     Route::get('', [BackEndController::class, 'index'])->name('back.index');
@@ -55,6 +56,7 @@ Route::prefix('dashboard')->group(function(){
     Route::resource('sub-category', SubCategoryController::class);
     Route::resource('tag', TagController::class);
     Route::resource('comment', CommentController::class);
+    Route::resource('profile', ProfileController::class);
 });
 
 
