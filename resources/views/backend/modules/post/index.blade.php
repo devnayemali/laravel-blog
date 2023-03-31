@@ -50,22 +50,16 @@
                                         @foreach ($posts as $post)
                                             <tr>
                                                 <td>{{ $sl++ }}</td>
-                                                <td><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a></td>
+                                                <td><a href="{{ route('post.show', $post->id) }}">{{ $post->title }}</a>
+                                                </td>
                                                 <td>{{ $post->category?->name }} </td>
                                                 <td>
                                                     @php
-                                                        $btn_classes = [
-                                                            'btn-primary',
-                                                            'btn-secondary',
-                                                            'btn-success',
-                                                            'btn-danger',
-                                                            'btn-warning',
-                                                            'btn-info',
-                                                            'btn-dark'
-                                                        ];
+                                                        $btn_classes = ['btn-primary', 'btn-secondary', 'btn-success', 'btn-danger', 'btn-warning', 'btn-info', 'btn-dark'];
                                                     @endphp
                                                     @foreach ($post->tag as $tag)
-                                                        <button class="btn btn-info mb-1 btn-sm {{ $btn_classes[random_int(0,6)] }}">{{ $tag->name }}</button>
+                                                        <button
+                                                            class="btn btn-info mb-1 btn-sm {{ $btn_classes[random_int(0, 6)] }}">{{ $tag->name }}</button>
                                                     @endforeach
                                                 </td>
                                                 <td>
@@ -130,7 +124,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <img class="w-img" id="show_img_model" src="{{ url('image/post/original/' . $post->photo) }}" alt="post img">
+                    @if (!empty($post->photo))
+                    <img class="w-img" id="show_img_model" src="{{ url('image/post/original/' . $post->photo) }}"
+                        alt="post img">
+                    @endif
                 </div>
             </div>
         </div>
