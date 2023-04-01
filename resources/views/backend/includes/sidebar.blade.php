@@ -42,6 +42,7 @@
         </div>
     </li>
 
+    @if (Auth::user()->role == \App\Models\User::ADMIN)
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#category"
             aria-expanded="true" aria-controls="category">
@@ -83,7 +84,7 @@
             </div>
         </div>
     </li>
-
+    @endif
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

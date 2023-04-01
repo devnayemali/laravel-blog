@@ -7,6 +7,8 @@ use App\Http\Requests\PostUpdateRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +19,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category', 'sub_category', 'user', 'tag')->latest()->paginate(20);
+        $query = Post::with('category', 'sub_category', 'user', 'tag')->latest();
+        if (Auth::user()->role === User::USER) {
+            $posts = $query->where('user_id', Auth::id());
+        }
+        $posts = $query->paginate(20);
         return view('backend.modules.post.index', compact('posts'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,8 +46,7 @@ class PostController extends Controller
         $post_data = $request->except(['slug', 'tag_ids', 'photo']);
 
         $post_data['slug'] = Str::slug($request->input('slug'));
-        // $post_data['user_id'] = Auth::user()->id;
-        $post_data['user_id'] = 1;
+        $post_data['user_id'] = Auth::id();
         $post_data['is_approved'] = 1;
 
         if ($request->hasFile('photo')) {
@@ -75,6 +81,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        if (Auth::user()->role == User::USER && $post->user_id != Auth::id()){
+            return abort('403', 'Unauthrized');
+        }
         $post->load('category', 'sub_category', 'user', 'tag');
         return view('backend.modules.post.show', compact('post'));
     }

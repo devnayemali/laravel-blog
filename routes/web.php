@@ -10,7 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Middleware\UserMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,16 +36,23 @@ Route::get('/get-districts/{division_id}', [ProfileController::class, 'getDistri
 Route::get('/get-thanas/{district_id}', [ProfileController::class, 'getThanas']);
 Route::get('/get-unions/{thana_id}', [ProfileController::class, 'getUnions']);
 
-Route::prefix('dashboard')->group(function(){
+Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
     Route::get('', [BackEndController::class, 'index'])->name('back.index');
     Route::resource('post', PostController::class);
-    Route::resource('category', CategoryController::class);
     Route::get('get-subcategory/{id}', [SubCategoryController::class, 'getSubCategorByCategoryId']);
-    Route::resource('sub-category', SubCategoryController::class);
-    Route::resource('tag', TagController::class);
     Route::resource('comment', CommentController::class);
     Route::post('upload-photo', [ProfileController::class, 'upload_photo']);
     Route::resource('profile', ProfileController::class);
+
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('category', CategoryController::class);
+        Route::resource('tag', TagController::class);
+        Route::resource('sub-category', SubCategoryController::class);
+    });
+
+
+
+
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

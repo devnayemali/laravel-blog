@@ -82,14 +82,15 @@
                     <div class="card-body">
                         <img class="img-thumbnail mb-2" id="previous_image"
                             src="{{ url('image/user/' . $profile?->photo) }}"
-                            style="{{ $profile->photo != null ? 'display:blcok' : 'display:none' }}">
+                            style="{{ $profile?->photo != null ? 'display:blcok' : 'display:none' }}">
                         <label class="d-block">Upload Photo</label>
                         <form>
                             <input type="file" class="d-block" id="image_input" value="Upload">
                             <button type="reset" id="reset" class="d-none">reset</button>
                         </form>
                         <p class="text-danger mb-0" id="error_message"></p>
-                        <button style="width:100px" class="btn btn-outline-success my-3 d-block" id="image_upload_button">Upload</button>
+                        <button style="width:100px" class="btn btn-outline-success my-3 d-block"
+                            id="image_upload_button">Upload</button>
                         <img class="img-thumbnail" id="image_preview">
                     </div>
                 </div>
@@ -147,6 +148,24 @@
                     $('#reset').trigger('click');
                     $("#previous_image").attr('src', response.photo).show();
                     $('#image_preview').attr('src', '');
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: response.cls,
+                        title: response.msg
+                    })
+
                 });
             } else {
                 is_loading = false;
