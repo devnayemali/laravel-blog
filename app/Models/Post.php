@@ -33,4 +33,8 @@ class Post extends Model
     public function comment(){
         return $this->hasMany(Comment::class)->whereNull('comment_id');
     }
+
+    public function post_count(){
+        return $this->hasOne(PostCount::class, 'post_id', 'id');
+    }
 }

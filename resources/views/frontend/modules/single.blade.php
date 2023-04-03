@@ -33,7 +33,8 @@
                 <ul class="post-info">
                     <li><a href="#">{{ $post->user?->name }}</a></li>
                     <li><a href="#">{{ $post->created_at->format('M d, Y') }}</a></li>
-                    <li><a href="#">12 Comments</a></li>
+                    <li><a href="#">{{ $post->comment?->count() }} Comments</a></li>
+                    <li><a href="#">{{ $post->post_count?->count }} Views</a></li>
                 </ul>
                 <p>
                     {!! $post->description !!}
@@ -95,7 +96,8 @@
                                     <img src="{{ url('frontend/assets/images/comment-author-01.jpg') }}" alt="">
                                 </div>
                                 <div class="right-content">
-                                    <h4>{{ $reply->user?->name }}<span>{{ $reply->created_at->format('M d, Y') }}</span></h4>
+                                    <h4>{{ $reply->user?->name }}<span>{{ $reply->created_at->format('M d, Y') }}</span>
+                                    </h4>
                                     <p>{{ $reply->comment }}</p>
                                 </div>
                             </li>
@@ -149,7 +151,15 @@
     @endif
 
     @push('js')
+        <script src="{{ url('frontend/assets/js/axios.min.js') }}"></script>
         <script>
+            const readCount = () => {
+                axios.get(window.location.origin + '/post-count/' + '{{ $post->id }}');
+            }
+            setTimeout(() => {
+                readCount();
+            }, 1000);
+
             $('.comment-reply-btn').on('click', function() {
                 $(this).parent('.comment-form-wrap').addClass('active');
             });

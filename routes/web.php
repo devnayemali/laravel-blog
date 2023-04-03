@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\PostCountController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\TagController;
@@ -35,6 +36,7 @@ Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.s
 Route::get('/get-districts/{division_id}', [ProfileController::class, 'getDistricts']);
 Route::get('/get-thanas/{district_id}', [ProfileController::class, 'getThanas']);
 Route::get('/get-unions/{thana_id}', [ProfileController::class, 'getUnions']);
+Route::get('/post-count/{post_id}', [FrontendController::class, 'postReadCount']);
 
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
     Route::get('', [BackEndController::class, 'index'])->name('back.index');

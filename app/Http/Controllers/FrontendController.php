@@ -103,7 +103,7 @@ class FrontendController extends Controller
     {
         $title = 'POST DETAILS';
         $sub_title = $slug;
-        $post = Post::with('category', 'user', 'tag', 'comment', 'comment.user', 'comment.reply')
+        $post = Post::with('category', 'user', 'tag', 'comment', 'comment.user', 'comment.reply', 'post_count')
             ->where('is_approved', 1)
             ->where('status', 1)
             ->where('slug', $slug)
@@ -112,9 +112,16 @@ class FrontendController extends Controller
     }
 
 
-    final public function contact_us(){
+    final public function contact_us()
+    {
         $title = 'LET’S STAY IN TOUCH!';
         $sub_title = 'CONTACT US';
         return view('frontend.modules.contact', compact('title', 'sub_title'));
+    }
+
+
+    final public function postReadCount($post_id)
+    {
+        (new PostCountController($post_id))->postReadCount();
     }
 }
