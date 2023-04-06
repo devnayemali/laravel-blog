@@ -14,7 +14,6 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        dd(App::getLocale());
         $query = Post::with('category', 'user', 'tag')->where('is_approved', 1)->where('status', 1);
         $posts = $query->latest()->take(5)->get();
         $slider_posts = $query->inRandomOrder()->take(5)->get();
